@@ -9,7 +9,7 @@ easy_admin:
       BlogPost:
          class: App\Entity\BlogPost
          list:
-            fields: ['id', 'title', 'published', 'slug']
+            fields: ['id', { property: 'title', label: 'Heading' }, { property: 'published', label: 'Post Published' }, { property: 'slug', label: 'Post Slug' }]
 
    design:
       brand_color: '#1ABC9C'

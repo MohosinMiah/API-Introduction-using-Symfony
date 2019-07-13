@@ -7,9 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource()
- * @ORM\Entity(repositoryClass="App\Repository\BlogPostRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
  */
-class BlogPost
+class Comment
 {
     /**
      * @ORM\Id()
@@ -19,9 +19,9 @@ class BlogPost
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
-    private $title;
+    private $content;
 
     /**
      * @ORM\Column(type="datetime")
@@ -29,12 +29,7 @@ class BlogPost
     private $published;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $slug;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="blogPosts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(nullable=false)
      */
     private $author;
@@ -44,14 +39,14 @@ class BlogPost
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getContent(): ?string
     {
-        return $this->title;
+        return $this->content;
     }
 
-    public function setTitle(string $title): self
+    public function setContent(string $content): self
     {
-        $this->title = $title;
+        $this->content = $content;
 
         return $this;
     }
@@ -64,18 +59,6 @@ class BlogPost
     public function setPublished(\DateTimeInterface $published): self
     {
         $this->published = $published;
-
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
 
         return $this;
     }
