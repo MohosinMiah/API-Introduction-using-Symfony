@@ -1,7 +1,17 @@
 
 
 easy_admin:
+   site_name: 'API Practice in Symfony.'
+   user:
+      display_name: true
+      display_avatar: false
    entities:
-       # List the entity class name you want to manage
-       - App\Entity\BlogPost
-      
+      BlogPost:
+         class: App\Entity\BlogPost
+         list:
+            fields: ['id', 'title', 'published', 'slug']
+
+   design:
+      brand_color: '#1ABC9C'
+
+
