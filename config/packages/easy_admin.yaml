@@ -12,6 +12,9 @@ easy_admin:
             fields: ['id', { property: 'title', label: 'Heading' }, { property: 'published', label: 'Post Published' }, { property: 'slug', label: 'Post Slug' }]
       User:
         class: App\Entity\User
+        list:
+            fields: ['id', { property: 'username', label: 'UserName' }, { property: 'password', label: 'Password' }, { property: 'fullname', label: 'fullname'},'email' ]
+
 
       Comment:
         class: App\Entity\Comment

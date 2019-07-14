@@ -8,15 +8,17 @@ use App\Entity\BlogPost;
 use App\Entity\User;
 use App\Entity\Comment;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Faker\Factory;
 
 class ApiFixtures extends Fixture
 {
     private $encoder;
-
+    private $faker;
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
-    }
+        $this->faker = Factory::create();
+        }
 
 
 
@@ -29,48 +31,57 @@ class ApiFixtures extends Fixture
 
     public function load_blog_post(ObjectManager $manager)
     {
-        $user = $this->getReference('user');
+    for ($i=10; $i <100 ; $i++) { 
+
+         $user = new User();
+            $user = $this->getReference("user".strval($i)."id");
+           
         $blog = new BlogPost();
-        $blog->setTitle("Heading One");
-        $blog->setPublished(new \DateTime('2019-07-05 12:00:00'));
+        $blog->setTitle($this->faker->realText(rand(10,40)));
+        $blog->setPublished($this->faker->dateTimeBetween('-100 days', '-1 days'));
         $blog->setSlug('heading-one');
         $blog->setAuthor($user);
         $manager->persist($blog);
 
         
-        $blog = new BlogPost();
-        $blog->setTitle("Heading Two");
-        $blog->setPublished(new \DateTime('2019-11-05 12:00:00'));
-        $blog->setSlug('heading-two');
-        $blog->setAuthor($user);
-        $manager->persist($blog);
+    }
+   
 
         $manager->flush();
     }
     public function load_comments(ObjectManager $manager)
     {
-        $user = $this->getReference('user');
 
+        for ($i=10; $i <50 ; $i++) { 
+            $user = new User();
+            $user = $this->getReference("user".strval($i)."id");
+          
         $comment = new Comment();
-        $comment->setContent("This is really very good");
-        $comment->setPublished(new \DateTime('2019-07-05 12:00:00'));
+        $comment->setContent($this->faker->realText(rand(10,410)));
+        $comment->setPublished($this->faker->dateTimeBetween('-100 days', '-1 days'));
         $comment->setAuthor($user);
 
         $manager->persist($comment);
+        }
 
         $manager->flush();
     }
     public function load_author(ObjectManager $manager)
     {
+        for ($i=0; $i <200 ; $i++) { 
+
         $user = new User();
-        $user->setUsername("Mohosin");
-        $password = $this->encoder->encodePassword($user, 'pass_1234');
+
+        
+        $user->setUsername($this->faker->realText(rand(10,20)));
+        $password = $this->encoder->encodePassword($user, $this->faker->realText(rand(10,30)));
 
        $user->setPassword($password);
         $user->setEmail("mohosin@gmail.com");
-        $user->setFullname("Md.Mohosin Miah");
-        $this->addReference("user",$user);
+        $user->setFullname($this->faker->name);
+        $this->addReference("user".strval($i)."id",$user);
         $manager->persist($user);
+        }
         $manager->flush();
     }
 
