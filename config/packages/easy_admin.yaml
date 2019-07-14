@@ -10,6 +10,11 @@ easy_admin:
          class: App\Entity\BlogPost
          list:
             fields: ['id', { property: 'title', label: 'Heading' }, { property: 'published', label: 'Post Published' }, { property: 'slug', label: 'Post Slug' }]
+      User:
+        class: App\Entity\User
+
+      Comment:
+        class: App\Entity\Comment
 
    design:
       brand_color: '#1ABC9C'
