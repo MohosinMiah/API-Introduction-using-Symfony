@@ -34,6 +34,11 @@ class Comment
      */
     private $author;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\BlogPost", inversedBy="comments")
+     */
+    private $posts;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,5 +82,17 @@ class Comment
     
     public function __toString() {
         return $this->content;
+    }
+
+    public function getPosts(): ?BlogPost
+    {
+        return $this->posts;
+    }
+
+    public function setPosts(?BlogPost $posts): self
+    {
+        $this->posts = $posts;
+
+        return $this;
     }
 }
