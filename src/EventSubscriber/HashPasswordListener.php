@@ -6,7 +6,6 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
-
 class HashPasswordListener implements EventSubscriber
 {
     private $passwordEncoder;

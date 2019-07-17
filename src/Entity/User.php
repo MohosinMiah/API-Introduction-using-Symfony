@@ -9,6 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * @ApiResource(
  *     collectionOperations={"post"},
@@ -19,6 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity("email")
  */
 class User implements UserInterface
 {
@@ -54,8 +57,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Groups({"read"})
      * @Assert\Email(
-     *     message = "The email '{{ value }}' is not a valid email.",
-     *     checkMX = true
+     *     message = "The email  is not a valid email.",
      * )
      */
     private $email;
