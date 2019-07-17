@@ -7,10 +7,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+// use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource(
- *     collectionOperations={"get"},
- *     itemOperations={"get"}
+ *     collectionOperations={},
+ *     itemOperations={"get"},
+ *     normalizationContext =
+ *         {
+ *           "groups"={"read" }
+ *         }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
@@ -20,36 +25,45 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
+     * 
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
      */
     private $fullname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
+     * 
      */
     private $email;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\BlogPost", mappedBy="author", orphanRemoval=true)
+     * 
      */
     private $blogPosts;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="author", orphanRemoval=true)
+     * 
      */
     private $comments;
 
@@ -68,6 +82,7 @@ class User implements UserInterface
     {
         return $this->username;
     }
+
 
     public function setUsername(string $username): self
     {

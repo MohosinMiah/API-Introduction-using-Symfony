@@ -8,7 +8,9 @@ use App\Entity\BlogPost;
 use App\Entity\User;
 use App\Entity\Comment;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Faker\Factory;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 class ApiFixtures extends Fixture
 {
