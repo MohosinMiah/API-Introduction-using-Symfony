@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource(
- *     collectionOperations={},
+ *     collectionOperations={"post","get"},
  *     itemOperations={"get"},
  *     normalizationContext =
  *         {
@@ -38,7 +38,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
- 
+     * @Groups({"read"})
      */
     private $password;
 
@@ -57,13 +57,13 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\BlogPost", mappedBy="author", orphanRemoval=true)
-     * 
+     * @Groups({"read"})
      */
     private $blogPosts;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="author", orphanRemoval=true)
-     * 
+     * @Groups({"read"})
      */
     private $comments;
 
