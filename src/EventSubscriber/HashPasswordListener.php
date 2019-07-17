@@ -1,10 +1,12 @@
 <?php   
 namespace App\EventSubscriber;
+
+use AppBundle\Entity\User;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use App\Entity\User;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+
 class HashPasswordListener implements EventSubscriber
 {
     private $passwordEncoder;
@@ -12,24 +14,20 @@ class HashPasswordListener implements EventSubscriber
     {
         $this->passwordEncoder = $passwordEncoder;
     }
+    public function prePersist(GetResponseForControllerResultEvent $args)
+    {
+        $entity = $args->getControllerResult();
+        if (!$entity instanceof User) {
+            return;
+        }
+        $encoded = $this->passwordEncoder->encodePassword(
+            $entity,
+            $entity->getPassword()
+        );
+        $entity->setPassword($encoded);
+    }
     public function getSubscribedEvents()
     {
         return ['prePersist', 'preUpdate'];
     }
- 
-        public function prePersist(LifecycleEventArgs $args)
-        {
-            $entity = $args->getEntity();
-            if (!$entity instanceof User) {
-                return;
-            }
-            $encoded = $this->passwordEncoder->encodePassword(
-                $entity,
-                $entity->getPassword()
-            );
-            $entity->setPassword($encoded);
-        }
-   
 }
-
-

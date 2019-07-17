@@ -8,9 +8,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ApiResource(
- *     collectionOperations={"post","get"},
+ *     collectionOperations={"post"},
  *     itemOperations={"get"},
  *     normalizationContext =
  *         {
@@ -32,6 +33,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"read"})
+     * @Assert\NotBlank(message="Field Must Not be empty!")
      * 
      */
     private $username;
@@ -51,7 +53,10 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"read"})
-     * 
+     * @Assert\Email(
+     *     message = "The email '{{ value }}' is not a valid email.",
+     *     checkMX = true
+     * )
      */
     private $email;
 
